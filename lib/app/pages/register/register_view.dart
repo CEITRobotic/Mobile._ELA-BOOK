@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'login_controller.dart';
+import 'register_controller.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
-  final controller = LoginController();
+class _LoginViewState extends State<RegisterView> {
+  final controller = RegisterController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('LoginPage')),
+      appBar: AppBar(title: const Text('RegisterPage')),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -45,9 +45,9 @@ class _LoginViewState extends State<LoginView> {
             ),
 
             ElevatedButton(
-              child: Text('Go to RegisterPage'),
+              child: Text('Go to HomePage'),
               onPressed: () {
-                Navigator.pushNamed(context, '/register');
+                Navigator.pushNamed(context, '/home');
               },
             ),
           ],
