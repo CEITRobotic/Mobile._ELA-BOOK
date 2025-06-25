@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "655174886630",
+    "project_id": "ela-book",
+    "storage_bucket": "ela-book.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655174886630:android:dacffbe63ae425d6b50727",
+        "android_client_info": {
+          "package_name": "com.example.ela_book"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4eCa4Z0_5Nc4xf4gnPnLmX8G0BiseAXQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
