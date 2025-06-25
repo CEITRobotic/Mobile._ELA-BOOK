@@ -11,7 +11,7 @@ export 'package:ela_book/domain/enums/auth_status.dart';
 
     // Get input from controller in page
     final user = User(name: 'janhdo', password: '12345');
-    var status = await LoginUser(AuthRepositoryImpl())(user);
+    final status = await LoginUser(AuthRepositoryImpl())(user);
 
     if (status == AuthStatus.success) {
       // Login successfully
@@ -27,7 +27,7 @@ export 'package:ela_book/domain/enums/auth_status.dart';
 
     // Get input from controller in page
     final user = User(name: 'janhdo', password: '12345', email: 'janhdo1234@gmail.com');
-    var status = await RegisterUser(AuthRepositoryImpl())(user);
+    final status = await RegisterUser(AuthRepositoryImpl())(user);
 
     if (status == AuthStatus.success) {
       // Register successfully

@@ -19,7 +19,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final user = User(name: 'Mina', password: 'hello', email: 'top@example.com');
-  var status = await RegisterUser(AuthRepositoryImpl())(user);
+  final status = await RegisterUser(AuthRepositoryImpl())(user);
   print(status);
 
   runApp(MyApp());
