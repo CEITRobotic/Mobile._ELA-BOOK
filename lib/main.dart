@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-import 'package:ela_book/barrel/auth.dart';
-
 import 'app/pages/intro/intro_view.dart';
 import 'app/pages/login/login_view.dart';
 import 'app/pages/register/register_view.dart';
@@ -17,10 +15,6 @@ import 'app/pages/event/event_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  final user = User(name: 'Mina', password: 'hello', email: 'top@example.com');
-  final status = await RegisterUser(AuthRepositoryImpl())(user);
-  print(status);
 
   runApp(MyApp());
 }

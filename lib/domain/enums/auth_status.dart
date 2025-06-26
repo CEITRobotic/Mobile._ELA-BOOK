@@ -1,6 +1,6 @@
 enum AuthStatus {
   success,
-  error,
+  notSuccess,
   exist,
-  notFound,
+  notExist,
 }
