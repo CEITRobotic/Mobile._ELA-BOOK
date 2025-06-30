@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'login_presenter.dart';
+import 'home_presenter.dart';
 
-class LoginController {
-  final num = 10;
+class HomeController {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  final LoginPresenter presenter = LoginPresenter();
+  final HomePresenter presenter = HomePresenter();
 
   Future<String> login() async {
     final username = usernameController.text;
@@ -13,3 +12,4 @@ class LoginController {
     return await presenter.login(username, password);
   }
 }
+

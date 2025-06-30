@@ -1,4 +1,3 @@
-import '../entities/user.dart';
 import '../repositories/auth_repository.dart';
 import '../../domain/enums/auth_status.dart';
 
@@ -7,7 +6,6 @@ class LoginUser {
 
   LoginUser(this.repository);
 
-  Future<AuthStatus> call(User user) async {
-    return await repository.login(user);
-  }
+  Future<AuthStatus> call(String? name, String? password) async =>
+      await repository.login(name, password);
 }

@@ -7,12 +7,12 @@ import '../models/user_model.dart';
 import '../../domain/enums/auth_status.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final users = FirebaseFirestore.instance.collection('users');
+  final firestore = FirebaseFirestore.instance.collection('users');
 
   Future<QuerySnapshot<Map<String, dynamic>>> _checkExistNameData(
     User user,
   ) async {
-    return await users.where('name', isEqualTo: user.name).limit(1).get();
+    return await firestore.where('name', isEqualTo: user.name).limit(1).get();
   }
 
   String _hashSHA256(String input) {
@@ -21,27 +21,30 @@ class AuthRepositoryImpl implements AuthRepository {
     return digest.toString();
   }
 
+  // ---------- Below it's real implement functions ----------
+
   @override
-  Future<AuthStatus> register(User user) async {
+  Future<AuthStatus> register(
+    String? name,
+    String? password,
+    String? email,
+  ) async {
     final model = UserModel(
-      name: user.name!,
-      password: _hashSHA256(user.password!),
-      email: user.email!,
+      name: name!,
+      password: _hashSHA256(password!),
+      email: email!,
     );
 
     final query = await _checkExistNameData(model);
     if (query.docs.isNotEmpty) return AuthStatus.exist;
 
-    await users.add(model.toMap());
+    await firestore.add(model.toMap());
     return AuthStatus.success;
   }
 
   @override
-  Future<AuthStatus> login(User user) async {
-    final model = UserModel(
-      name: user.name!,
-      password: _hashSHA256(user.password!),
-    );
+  Future<AuthStatus> login(String? name, String? password) async {
+    final model = UserModel(name: name!, password: _hashSHA256(password!));
 
     final query = await _checkExistNameData(model);
     if (query.docs.isEmpty) return AuthStatus.notExist;
