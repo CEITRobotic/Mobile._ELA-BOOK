@@ -16,7 +16,9 @@ Suspendisse dapibus at ligula ac scelerisque. Nullam ornare gravida accumsan. Ma
       creator: 'Jando',
     );
 
-    log.info(await AddNovel(NovelRepositoryImpl())(novel));
+    log.info(
+      "Trying create: ${novel.name} | status: ${await AddNovel(NovelRepositoryImpl())(novel)}",
+    );
 
     novel = Novel(
       image: "assets/images/novel_imgs/2.png",
@@ -29,6 +31,8 @@ Suspendisse dapibus at ligula ac scelerisque. Nullam ornare gravida accumsan. Ma
       creator: 'Jando',
     );
 
-    log.info(await AddNovel(NovelRepositoryImpl())(novel));
+    log.info(
+      "Trying create: ${novel.name} | status: ${await AddNovel(NovelRepositoryImpl())(novel)}",
+    );
   }
 }

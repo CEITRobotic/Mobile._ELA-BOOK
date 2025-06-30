@@ -1,5 +1,3 @@
-import 'package:ela_book/barrel/novel.dart';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:logging/logging.dart';
@@ -21,11 +19,6 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   InitNovels().init();
   _setupLogging();
-
-  final novels = await GetNovelAll(NovelRepositoryImpl())();
-  for (var novel in novels) {
-    print('Novel name: ${novel.name}, creator: ${novel.creator}');
-  }
 
   runApp(MyApp());
 }

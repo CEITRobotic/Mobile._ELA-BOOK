@@ -15,3 +15,20 @@ export 'package:ela_book/domain/usecases/get_novel_all.dart';
     }
 */
 
+
+// Example: Add novel to database firestore
+/*
+    import 'package:ela_book/barrel/novel.dart';
+
+    novel = Novel(
+      image: "assets/images/novel_imgs/2.png",
+      name: 'ສຸສານລົດເມໂຮງຮຽນ',
+      type: 'horror, advanture',
+      story: 'text...',
+      creator: 'Jando',
+    );
+
+    final status = await AddNovel(NovelRepositoryImpl())(novel));
+
+    // Do something
+*/
