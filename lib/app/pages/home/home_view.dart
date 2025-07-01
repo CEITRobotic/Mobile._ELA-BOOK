@@ -11,8 +11,8 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
   final List<String> imageUrls = [
     'assets/images/ads_imgs/1.jpg',
-    'assets/images/novel_imgs/1.jpg',
-    'assets/images/novel_imgs/2.png',
+    'assets/images/ads_imgs/2.jpg',
+    'assets/images/ads_imgs/3.jpg',
   ];
 
   final CarouselSliderController _controller = CarouselSliderController();
