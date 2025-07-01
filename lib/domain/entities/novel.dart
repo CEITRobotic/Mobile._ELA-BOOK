@@ -1,4 +1,5 @@
 class Novel {
+  final String? id;
   final String? image;
   final String? name;
   final List<String>? tag;
@@ -10,6 +11,7 @@ class Novel {
   final int? buy;
 
   Novel({
+    this.id,
     this.image,
     this.name,
     this.tag,

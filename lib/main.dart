@@ -14,11 +14,31 @@ import 'app/pages/buy_book/buy_book_view.dart';
 import 'app/pages/storage/storage_view.dart';
 import 'app/pages/event/event_view.dart';
 
+import 'package:ela_book/barrel/auth.dart';
+import 'package:ela_book/barrel/novel.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   InitNovels().init();
   _setupLogging();
+
+  // final user = User(
+  //   name: 'janhdo',
+  //   password: '12345asdb',
+  //   email: 'johndo1234@gmail.com',
+  // );
+  // final status = await RegisterUser(AuthRepositoryImpl())(
+  //   user.name,
+  //   user.password,
+  //   user.email,
+  // );
+  // print(status);
+
+  final novels = await GetNovelAll(NovelRepositoryImpl())();
+  for (var novel in novels) {
+    print(novel.id);
+  }
 
   runApp(MyApp());
 }

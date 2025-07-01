@@ -4,7 +4,7 @@ import '../../domain/repositories/auth_repository.dart';
 import '../../domain/enums/auth_status.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final firestore = FirebaseFirestore.instance.collection('users');
+  final firestore = FirebaseFirestore.instance;
 
   @override
   Future<AuthStatus> register(
@@ -15,7 +15,14 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email!, password: password!);
-      await firestore.doc(userCredential.user!.uid).set({'name': name});
+
+      await firestore.collection('users').doc(userCredential.user!.uid).set({
+        'name': name,
+        'liked_novels': [],
+        'rented_novels': [],
+        'buyed_novels': [],
+      });
+
       return AuthStatus.success;
     } on FirebaseAuthException catch (e) {
       switch (e.code) {

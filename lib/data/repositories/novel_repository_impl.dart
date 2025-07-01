@@ -1,35 +1,40 @@
 import "package:ela_book/domain/entities/novel.dart";
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "../models/novel_model.dart";
 import "../../domain/repositories/novel_repository.dart";
 import "../../domain/enums/novel_status.dart";
 
 class NovelRepositoryImpl implements NovelRepository {
-  final firestore = FirebaseFirestore.instance.collection('novels');
+  final firestore = FirebaseFirestore.instance;
+  final uid = FirebaseAuth.instance.currentUser!.uid;
 
   Future<QuerySnapshot<Map<String, dynamic>>> _checkExistNameData(
     Novel user,
   ) async {
-    return await firestore.where('name', isEqualTo: user.name).limit(1).get();
+    return await firestore
+        .collection('novels')
+        .where('name', isEqualTo: user.name)
+        .limit(1)
+        .get();
   }
 
   // ---------- Below it's real implement functions ----------
 
   @override
   Future<List<NovelModel>> getNovelAll() async {
-    final snapshot = await firestore.get();
+    final snapshot = await firestore.collection('novels').get();
     return snapshot.docs.map((doc) => NovelModel.fromMap(doc)).toList();
   }
 
   @override
   Future<List<Novel>> getNovelFromTag(String? type) async {
-    final snapshot = await firestore.where('type', arrayContains: type).get();
+    final snapshot =
+        await firestore
+            .collection('novels')
+            .where('tag', arrayContains: type)
+            .get();
     return snapshot.docs.map((doc) => NovelModel.fromMap(doc)).toList();
-  }
-
-  @override
-  Novel getNovelFromIndex(Novel user) {
-    throw UnimplementedError();
   }
 
   @override
@@ -49,7 +54,21 @@ class NovelRepositoryImpl implements NovelRepository {
     final query = await _checkExistNameData(model);
     if (query.docs.isNotEmpty) return NovelStatus.exist;
 
-    await firestore.add(model.toMap());
+    await firestore.collection('novels').add(model.toMap());
     return NovelStatus.success;
   }
+
+  @override
+  Future<void> likeNovel() async {
+    await firestore.collection('users').doc(uid).update({
+      'liked_novels': FieldValue.arrayUnion([]),
+    });
+    print(uid);
+  }
+
+  @override
+  Future<void> rentNovel() async {}
+
+  @override
+  Future<void> buyNovel() async {}
 }

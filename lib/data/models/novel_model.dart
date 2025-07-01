@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NovelModel extends Novel {
   NovelModel({
+    super.id,
     super.image,
     super.name,
     super.tag,
@@ -17,11 +18,12 @@ class NovelModel extends Novel {
   factory NovelModel.fromMap(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return NovelModel(
+      id: doc.id,
       image: data['image'] ?? '',
       name: data['name'] ?? '',
       tag:
-          data['type'] is List
-              ? List<String>.from(data['type'].whereType<String>())
+          data['tag'] is List
+              ? List<String>.from(data['tag'].whereType<String>())
               : null,
       story: data['story'] ?? '',
       creator: data['creator'] ?? '',
@@ -36,7 +38,7 @@ class NovelModel extends Novel {
     return {
       'image': image,
       'name': name,
-      'type': tag,
+      'tag': tag,
       'story': story,
       'creator': creator,
       'love': love,

@@ -1,10 +1,10 @@
+import 'package:ela_book/data/models/novel_model.dart';
 import '../repositories/novel_repository.dart';
-import '../entities/novel.dart';
 
 class GetNovelAll {
   final NovelRepository repository;
 
   GetNovelAll(this.repository);
 
-  Future<List<Novel>> call() async => await repository.getNovelAll();
+  Future<List<NovelModel>> call() async => await repository.getNovelAll();
 }
