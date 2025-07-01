@@ -1,7 +1,7 @@
 class Novel {
   final String? image;
   final String? name;
-  final String? type;
+  final List<String>? tag;
   final String? story;
   final String? creator;
   final int? love;
@@ -12,7 +12,7 @@ class Novel {
   Novel({
     this.image,
     this.name,
-    this.type,
+    this.tag,
     this.story,
     this.creator,
     this.love,

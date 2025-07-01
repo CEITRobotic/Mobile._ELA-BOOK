@@ -8,7 +8,7 @@ class InitNovels {
     var novel = Novel(
       image: "assets/images/novel_imgs/1.jpg",
       name: 'ຮັກຄືການເດີນທາງ',
-      type: 'comedy, romantic',
+      tag: ['ຕະຫລົກ', 'ຄວາມຮັກ'],
       story:
           '''Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices odio et nibh elementum dapibus. Maecenas sed ligula ornare, vestibulum tellus vel, ullamcorper nisl. Quisque eu dolor id odio tristique luctus. Nam scelerisque porttitor mi, a sagittis magna. Donec maximus erat nec mauris vehicula, a consequat est tincidunt. Aenean laoreet dui sit amet commodo tincidunt. Maecenas vulputate, metus sodales posuere tristique, enim felis mattis metus, nec ullamcorper enim arcu sed lacus. Aliquam eleifend ultricies mauris sit amet blandit. Aliquam nec metus a odio vehicula iaculis. Nunc a efficitur urna, ut vestibulum dolor.
 
@@ -23,7 +23,7 @@ Suspendisse dapibus at ligula ac scelerisque. Nullam ornare gravida accumsan. Ma
     novel = Novel(
       image: "assets/images/novel_imgs/2.png",
       name: 'ສຸສານລົດເມໂຮງຮຽນ',
-      type: 'horror, advanture',
+      tag: ['ສະຍອງຂວັນ', 'ພະຈົນໄພ', 'ໄວຫນຸ່ມ'],
       story:
           '''Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices odio et nibh elementum dapibus. Maecenas sed ligula ornare, vestibulum tellus vel, ullamcorper nisl. Quisque eu dolor id odio tristique luctus. Nam scelerisque porttitor mi, a sagittis magna. Donec maximus erat nec mauris vehicula, a consequat est tincidunt. Aenean laoreet dui sit amet commodo tincidunt. Maecenas vulputate, metus sodales posuere tristique, enim felis mattis metus, nec ullamcorper enim arcu sed lacus. Aliquam eleifend ultricies mauris sit amet blandit. Aliquam nec metus a odio vehicula iaculis. Nunc a efficitur urna, ut vestibulum dolor.
 

@@ -3,4 +3,5 @@ enum AuthStatus {
   notSuccess,
   exist,
   notExist,
+  weakPassword,
 }

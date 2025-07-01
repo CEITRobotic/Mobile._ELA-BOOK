@@ -3,6 +3,7 @@ export 'package:ela_book/data/repositories/novel_repository_impl.dart';
 export 'package:ela_book/domain/enums/novel_status.dart';
 export 'package:ela_book/domain/usecases/add_novel.dart';
 export 'package:ela_book/domain/usecases/get_novel_all.dart';
+export 'package:ela_book/domain/usecases/get_novel_from_tag.dart';
 
 
 // Example: Get all novels
@@ -10,6 +11,17 @@ export 'package:ela_book/domain/usecases/get_novel_all.dart';
     import 'package:ela_book/barrel/novel.dart';
 
     final novels = await GetNovelAll(NovelRepositoryImpl())();
+    for (var novel in novels) {
+      // Do something
+    }
+*/
+
+
+// Example: Get novels from tag
+/*
+    import 'package:ela_book/barrel/novel.dart';
+
+    final novels = await GetNovelFromType(NovelRepositoryImpl())("ຕະຫລົກ");
     for (var novel in novels) {
       // Do something
     }

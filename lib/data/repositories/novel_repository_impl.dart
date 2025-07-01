@@ -22,8 +22,9 @@ class NovelRepositoryImpl implements NovelRepository {
   }
 
   @override
-  Stream<List<Novel>> getNovelFromType(Novel user) {
-    throw UnimplementedError();
+  Future<List<Novel>> getNovelFromTag(String? type) async {
+    final snapshot = await firestore.where('type', arrayContains: type).get();
+    return snapshot.docs.map((doc) => NovelModel.fromMap(doc)).toList();
   }
 
   @override
@@ -36,7 +37,7 @@ class NovelRepositoryImpl implements NovelRepository {
     final model = NovelModel(
       image: novel.image!,
       name: novel.name!,
-      type: novel.type!,
+      tag: novel.tag!,
       story: novel.story!,
       creator: novel.creator!,
       love: 0,

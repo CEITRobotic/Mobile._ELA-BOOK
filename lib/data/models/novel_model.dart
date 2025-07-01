@@ -5,7 +5,7 @@ class NovelModel extends Novel {
   NovelModel({
     super.image,
     super.name,
-    super.type,
+    super.tag,
     super.story,
     super.creator,
     super.love,
@@ -19,7 +19,10 @@ class NovelModel extends Novel {
     return NovelModel(
       image: data['image'] ?? '',
       name: data['name'] ?? '',
-      type: data['type'] ?? '',
+      tag:
+          data['type'] is List
+              ? List<String>.from(data['type'].whereType<String>())
+              : null,
       story: data['story'] ?? '',
       creator: data['creator'] ?? '',
       love: data['love'] ?? 0,
@@ -33,7 +36,7 @@ class NovelModel extends Novel {
     return {
       'image': image,
       'name': name,
-      'type': type,
+      'type': tag,
       'story': story,
       'creator': creator,
       'love': love,

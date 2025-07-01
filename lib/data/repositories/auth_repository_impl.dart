@@ -1,27 +1,10 @@
-import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crypto/crypto.dart';
-import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../models/user_model.dart';
 import '../../domain/enums/auth_status.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final firestore = FirebaseFirestore.instance.collection('users');
-
-  Future<QuerySnapshot<Map<String, dynamic>>> _checkExistNameData(
-    User user,
-  ) async {
-    return await firestore.where('name', isEqualTo: user.name).limit(1).get();
-  }
-
-  String _hashSHA256(String input) {
-    var bytes = utf8.encode(input);
-    var digest = sha256.convert(bytes);
-    return digest.toString();
-  }
-
-  // ---------- Below it's real implement functions ----------
 
   @override
   Future<AuthStatus> register(
@@ -29,31 +12,38 @@ class AuthRepositoryImpl implements AuthRepository {
     String? password,
     String? email,
   ) async {
-    final model = UserModel(
-      name: name!,
-      password: _hashSHA256(password!),
-      email: email!,
-    );
-
-    final query = await _checkExistNameData(model);
-    if (query.docs.isNotEmpty) return AuthStatus.exist;
-
-    await firestore.add(model.toMap());
-    return AuthStatus.success;
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email!, password: password!);
+      await firestore.doc(userCredential.user!.uid).set({'name': name});
+      return AuthStatus.success;
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "email-already-in-use":
+          return AuthStatus.exist;
+        case "weak-password":
+          return AuthStatus.weakPassword;
+        default:
+          return AuthStatus.notSuccess;
+      }
+    }
   }
 
   @override
-  Future<AuthStatus> login(String? name, String? password) async {
-    final model = UserModel(name: name!, password: _hashSHA256(password!));
-
-    final query = await _checkExistNameData(model);
-    if (query.docs.isEmpty) return AuthStatus.notExist;
-
-    final data = query.docs.first.data();
-    if (data['password'] == model.password) {
+  Future<AuthStatus> login(String? email, String? password) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email!,
+        password: password!,
+      );
       return AuthStatus.success;
-    } else {
-      return AuthStatus.notSuccess;
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "invalid-credential":
+          return AuthStatus.notExist;
+        default:
+          return AuthStatus.notSuccess;
+      }
     }
   }
 }
