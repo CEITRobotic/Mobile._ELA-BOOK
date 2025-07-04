@@ -10,3 +10,6 @@ class IntroPresenter {
     }
   }
 }
+
+// folder ນີ້ໃຊ້ໃນການຕິດຕໍ່ກັບ firebase SDk
+// ຈັດການວ່າເວລາທີ່ເຮົາ login ໄດ້ແລ້ວໄປໃສຕໍ່
