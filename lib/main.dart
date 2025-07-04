@@ -14,8 +14,8 @@ import 'app/pages/buy_book/buy_book_view.dart';
 import 'app/pages/storage/storage_view.dart';
 import 'app/pages/event/event_view.dart';
 
-import 'package:ela_book/barrel/auth.dart';
-import 'package:ela_book/barrel/novel.dart';
+// import 'package:ela_book/barrel/auth.dart';
+// import 'package:ela_book/barrel/novel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,32 +23,29 @@ void main() async {
   InitNovels().init();
   _setupLogging();
 
-  final user = User(
-    email: 'johndo1234@gmail.com',
-    password: '12345asdb',
-  );
-  final status = await LoginUser(AuthRepositoryImpl())(
-    user.email,
-    user.password,
-  );
-  print(status);
+  // final user = User(
+  //   email: 'johndo1234@gmail.com',
+  //   password: '12345asdb',
+  // );
+  // final status = await LoginUser(AuthRepositoryImpl())(
+  //   user.email,
+  //   user.password,
+  // );
+  // print(status);
 
-  final novels = await GetNovelAll(NovelRepositoryImpl())();
-  for (var novel in novels) {
-    print(novel.id);
-    await DislikeNovel(NovelRepositoryImpl())(novel.id);
-  }
+  // final novels = await GetNovelAll(NovelRepositoryImpl())();
+  // for (var novel in novels) {
+  //   print(novel.id);
+  //   await DislikeNovel(NovelRepositoryImpl())(novel.id);
+  // }
 
   runApp(MyApp());
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // title: 'Login Example',
-      // title: 'Login Example',
       initialRoute: '/',
       routes: {
         '/': (context) => IntroView(),
@@ -64,8 +61,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// router app
 
 void _setupLogging() {
   Logger.root.level = Level.ALL;
