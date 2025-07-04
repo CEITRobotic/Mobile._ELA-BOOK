@@ -13,7 +13,7 @@ class SecondPageIntro extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Image(image: AssetImage('assets/eye.gif'), width: 60, height: 60),  // ແກ້ error ຄືນໃຫມ່ ຮູບຍັງບໍ່ສະແດງຜົນເທື່ອ
+              Image(image: AssetImage('assets/utils/eye.gif'), width: 250, height: 250),
             ],
           ),
 
