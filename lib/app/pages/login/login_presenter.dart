@@ -1,22 +1,22 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ela_book/barrel/auth.dart';
 
 class LoginPresenter {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   Future<String> login(String email, String password) async {
-    try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      return 'Login successful';
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
+    final user = User(email: email, password: password);
+    final status = await LoginUser(AuthRepositoryImpl())(
+      user.email,
+      user.password,
+    );
+
+    switch (status) {
+      case AuthStatus.success:
+        return 'Login successful';
+      case AuthStatus.notSuccess:
+        return 'Wrong password or email provided .';
+      case AuthStatus.notExist:
         return 'No user found for that email.';
-      } else if (e.code == 'wrong-password') {
-        return 'Wrong password provided.';
-      } else {
-        return 'Login failed: ${e.message}';
-      }
-    } catch (e) {
-      return 'Unexpected error: $e';
+      default:
+        return '[!] Unexpected error: Login failed';
     }
   }
 }

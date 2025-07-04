@@ -1,30 +1,27 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ela_book/barrel/auth.dart';
 
 class RegisterPresenter {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   Future<String> register(
     String username,
     String email,
     String password,
   ) async {
-    try {
-      UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
+    final user = User(name: username, password: password, email: email);
+    final status = await RegisterUser(AuthRepositoryImpl())(
+      user.name,
+      user.password,
+      user.email,
+    );
 
-      await userCredential.user?.updateDisplayName(username);
-
-      return 'Register successful';
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        return 'Email already in use.';
-      } else if (e.code == 'weak-password') {
+    switch (status) {
+      case AuthStatus.success:
+        return 'Register successful';
+      case AuthStatus.exist:
+        return 'Email already in use';
+      case AuthStatus.weakPassword:
         return 'Password is too weak.';
-      } else {
-        return 'Register failed: ${e.message}';
-      }
-    } catch (e) {
-      return 'Unexpected error: $e';
+      default:
+        return '[!] Unexpected error: Register failed';
     }
   }
 }
