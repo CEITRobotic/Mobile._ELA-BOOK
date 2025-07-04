@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import "../models/novel_model.dart";
 import "../../domain/repositories/novel_repository.dart";
 import "../../domain/enums/novel_status.dart";
+import 'package:logging/logging.dart';
 
 class NovelRepositoryImpl implements NovelRepository {
   final firestore = FirebaseFirestore.instance;
-  final uid = FirebaseAuth.instance.currentUser!.uid;
 
   Future<QuerySnapshot<Map<String, dynamic>>> _checkExistNameData(
     Novel user,
@@ -45,7 +45,7 @@ class NovelRepositoryImpl implements NovelRepository {
       tag: novel.tag!,
       story: novel.story!,
       creator: novel.creator!,
-      love: 0,
+      like: 0,
       view: 0,
       book: 0,
       buy: 0,
@@ -59,11 +59,47 @@ class NovelRepositoryImpl implements NovelRepository {
   }
 
   @override
-  Future<void> likeNovel() async {
+  Future<void> likeNovel(String? novelId) async {
+    final log = Logger('LikeNovel <fn>');
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final snapshot = await firestore.collection('users').doc(uid).get();
+    final likedNovels = List<String>.from(
+      snapshot.data()?['liked_novels'] ?? [],
+    );
+    if (likedNovels.contains(novelId)) {
+      log.info("uid:[$uid] already liked this novel");
+      return;
+    }
+
     await firestore.collection('users').doc(uid).update({
-      'liked_novels': FieldValue.arrayUnion([]),
+      'liked_novels': FieldValue.arrayUnion([novelId]),
     });
-    print(uid);
+    await firestore.collection('novels').doc(novelId).update({
+      'like': FieldValue.increment(1),
+    });
+  }
+
+  @override
+  Future<void> dislikeNovel(String? novelId) async {
+    final log = Logger('DisLikeNovel <fn>');
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final snapshot = await firestore.collection('users').doc(uid).get();
+    final likedNovels = List<String>.from(
+      snapshot.data()?['liked_novels'] ?? [],
+    );
+    if (!likedNovels.contains(novelId)) {
+      log.info("uid:[$uid] not found novel at novelId:[$novelId]");
+      return;
+    }
+
+    await firestore.collection('users').doc(uid).update({
+      'liked_novels': FieldValue.arrayRemove([novelId]),
+    });
+    await firestore.collection('novels').doc(novelId).update({
+      'like': FieldValue.increment(-1),
+    });
   }
 
   @override

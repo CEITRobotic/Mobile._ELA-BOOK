@@ -6,7 +6,8 @@ abstract class NovelRepository {
   Future<List<NovelModel>> getNovelAll();
   Future<List<Novel>> getNovelFromTag(String? type);
   Future<NovelStatus> addNovel(Novel user);
-  Future<void> likeNovel();
+  Future<void> likeNovel(String? novelId);
+  Future<void> dislikeNovel(String? novelId);
   Future<void> rentNovel();
   Future<void> buyNovel();
 }

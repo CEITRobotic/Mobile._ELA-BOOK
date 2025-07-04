@@ -5,7 +5,7 @@ class Novel {
   final List<String>? tag;
   final String? story;
   final String? creator;
-  final int? love;
+  final int? like;
   final int? view;
   final int? book;
   final int? buy;
@@ -17,7 +17,7 @@ class Novel {
     this.tag,
     this.story,
     this.creator,
-    this.love,
+    this.like,
     this.view,
     this.book,
     this.buy,

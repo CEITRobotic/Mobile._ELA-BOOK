@@ -23,21 +23,20 @@ void main() async {
   InitNovels().init();
   _setupLogging();
 
-  // final user = User(
-  //   name: 'janhdo',
-  //   password: '12345asdb',
-  //   email: 'johndo1234@gmail.com',
-  // );
-  // final status = await RegisterUser(AuthRepositoryImpl())(
-  //   user.name,
-  //   user.password,
-  //   user.email,
-  // );
-  // print(status);
+  final user = User(
+    email: 'johndo1234@gmail.com',
+    password: '12345asdb',
+  );
+  final status = await LoginUser(AuthRepositoryImpl())(
+    user.email,
+    user.password,
+  );
+  print(status);
 
   final novels = await GetNovelAll(NovelRepositoryImpl())();
   for (var novel in novels) {
     print(novel.id);
+    await DislikeNovel(NovelRepositoryImpl())(novel.id);
   }
 
   runApp(MyApp());
