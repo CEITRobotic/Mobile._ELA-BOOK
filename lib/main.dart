@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'app/pages/intro/intro_view.dart';
 import 'app/pages/login/login_view.dart';
 import 'app/pages/register/register_view.dart';
@@ -9,19 +8,26 @@ import 'app/pages/rent_book/rent_book_view.dart';
 import 'app/pages/buy_book/buy_book_view.dart';
 import 'app/pages/storage/storage_view.dart';
 import 'app/pages/event/event_view.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+// ============= firebase Auth ==============
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options:
+        DefaultFirebaseOptions
+            .currentPlatform, 
+  );
+  runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login Example',
+      // title: 'Login Example',
       initialRoute: '/',
       routes: {
         '/': (context) => IntroView(),
@@ -37,3 +43,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// router app

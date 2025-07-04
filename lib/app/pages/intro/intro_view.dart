@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'intro_controller.dart';
+import 'package:ela_book/app/pages/intro/intro_second_page_view.dart';
 
 class IntroView extends StatefulWidget {
   const IntroView({super.key});
@@ -9,46 +9,55 @@ class IntroView extends StatefulWidget {
 }
 
 class _IntroViewState extends State<IntroView> {
-  final controller = IntroController();
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const SecondPageIntro()),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('IntroPage')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
+      backgroundColor: const Color(0xFF970C0C),
+      body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Column(
-              children: [
-                TextField(
-                  controller: controller.usernameController,
-                  decoration: const InputDecoration(labelText: 'Username'),
-                ),
-                TextField(
-                  controller: controller.passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(labelText: 'Password'),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    final result = await controller.login();
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(result)));
-                  },
-                  child: const Text('Login'),
-                ),
-              ],
+            RichText(
+              text: TextSpan(
+                children: [
+                  const TextSpan(
+                    text: 'ອີ່',
+                    style: TextStyle(
+                      fontSize: 105,
+                      color: Colors.white,
+                      height: 1.0,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'ຫລ້າ',
+                    style: TextStyle(
+                      fontSize: 55,
+                      color: Colors.amber[600],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
 
-            ElevatedButton(
-              child: Text('Go to HomePage'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
-              },
+            Transform.translate(
+              offset: const Offset(70, -10),
+              child: const Text(
+                'ບຸ໊ກກກ',
+                style: TextStyle(fontSize: 55, color: Colors.white),
+              ),
             ),
           ],
         ),
@@ -56,3 +65,4 @@ class _IntroViewState extends State<IntroView> {
     );
   }
 }
+

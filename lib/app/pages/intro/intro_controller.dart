@@ -12,3 +12,6 @@ class IntroController {
     return await presenter.login(username, password);
   }
 }
+
+
+// controller ເອົາໄວ້ຂຽນ  function 
