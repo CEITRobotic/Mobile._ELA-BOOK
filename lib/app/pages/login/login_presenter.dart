@@ -1,12 +1,22 @@
-class LoginPresenter {
-  // Simulate authentication logic
-  Future<String> login(String username, String password) async {
-    await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
+import 'package:firebase_auth/firebase_auth.dart';
 
-    if (username == 'admin' && password == '1234') {
+class LoginPresenter {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<String> login(String email, String password) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       return 'Login successful';
-    } else {
-      return 'Invalid credentials';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        return 'Wrong password provided.';
+      } else {
+        return 'Login failed: ${e.message}';
+      }
+    } catch (e) {
+      return 'Unexpected error: $e';
     }
   }
 }
