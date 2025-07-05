@@ -162,8 +162,37 @@ class _HomeViewState extends State<HomeView> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 itemCount: comics[comics.keys.toList()[0]]!.length,
                 itemBuilder: (context, index) {
+                  return ComicCard(item: comics[comics.keys.toList()[0]]![index]);
+                },
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            // ✅ Comic section title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  comics.keys.toList()[1],
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            // ✅ Horizontal comic list
+            SizedBox(
+              height: 215,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                itemCount: comics[comics.keys.toList()[1]]!.length,
+                itemBuilder: (context, index) {
                   return ComicCard(
-                    item: comics[comics.keys.toList()[0]]![index],
+                    item: comics[comics.keys.toList()[1]]![index],
                   );
                 },
               ),
