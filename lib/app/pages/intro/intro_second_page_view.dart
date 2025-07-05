@@ -19,7 +19,7 @@ class SecondPageIntro extends StatelessWidget {
 
           const SizedBox(height: 40),
           Transform.translate(
-            offset: const Offset(0, 210),
+            offset: Offset(0, MediaQuery.of(context).size.height * 0.1),
             child: Column(
               children: [
                 const Text(
