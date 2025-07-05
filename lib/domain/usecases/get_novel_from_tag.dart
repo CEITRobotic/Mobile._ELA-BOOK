@@ -1,10 +1,10 @@
 import '../repositories/novel_repository.dart';
 import '../entities/novel.dart';
 
-class GetNovelFromType {
+class GetNovelFromTag {
   final NovelRepository repository;
 
-  GetNovelFromType(this.repository);
+  GetNovelFromTag(this.repository);
 
-  Future<List<Novel>> call(String? type) async => await repository.getNovelFromTag(type);
+  Future<List<Novel>> call(String? tag) async => await repository.getNovelFromTag(tag);
 }
