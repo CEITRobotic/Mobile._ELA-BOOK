@@ -4,10 +4,23 @@ project(runner LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
+<<<<<<< HEAD
+<<<<<<< HEAD
 set(BINARY_NAME "ela_book")
 # The unique GTK application identifier for this application. See:
 # https://wiki.gnome.org/HowDoI/ChooseApplicationID
 set(APPLICATION_ID "com.example.ela_book")
+=======
+=======
+>>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
+set(BINARY_NAME "elarbook")
+# The unique GTK application identifier for this application. See:
+# https://wiki.gnome.org/HowDoI/ChooseApplicationID
+set(APPLICATION_ID "com.example.elarbook")
+<<<<<<< HEAD
+>>>>>>> d96fb9e (ສ່ວນ payment ຮັບຜິດຊອບໂດຍ Josocool)
+=======
+>>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

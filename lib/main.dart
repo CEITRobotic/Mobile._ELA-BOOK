@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:logging/logging.dart';
+import 'package:ela_book/data/models/rent_model.dart';
 import 'firebase_options.dart';
 import 'init_novels.dart';
 
@@ -9,10 +10,10 @@ import 'app/pages/login/login_view.dart';
 import 'app/pages/register/register_view.dart';
 import 'app/pages/home/home_view.dart';
 import 'app/pages/detail/detail_view.dart';
-import 'app/pages/rent_book/rent_book_view.dart';
-import 'app/pages/buy_book/buy_book_view.dart';
-import 'app/pages/storage/storage_view.dart';
-import 'app/pages/event/event_view.dart';
+import 'app/pages/rent/rent_view.dart';
+import 'app/pages/purchase/purchase_view.dart';
+import 'app/pages/library/library_view.dart';
+import 'app/pages/notification/notification_view.dart';
 
 // import 'package:ela_book/barrel/auth.dart';
 // import 'package:ela_book/barrel/novel.dart';
@@ -41,22 +42,46 @@ void main() async {
 
   runApp(MyApp());
 }
+
+final rentModel = RentModel(
+  title: "ພຽງໃຈໃນຄວາມຝັນ",
+  author: "ອີຫຼ້າບຸກ",
+  pricePerDay: 10.0,
+);
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/',
-      routes: {
-        '/': (context) => IntroView(),
-        '/login': (context) => LoginView(),
-        '/register': (context) => RegisterView(),
-        '/home': (context) => HomeView(),
-        '/detail': (context) => DetailView(),
-        '/rent-book': (context) => RentBookView(),
-        '/buy-book': (context) => BuyBookView(),
-        '/storage': (context) => StorageView(),
-        '/event': (context) => EventView(),
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/':
+            return MaterialPageRoute(builder: (_) => IntroView());
+          case '/login':
+            return MaterialPageRoute(builder: (_) => LoginView());
+          case '/register':
+            return MaterialPageRoute(builder: (_) => RegisterView());
+          case '/home':
+            return MaterialPageRoute(builder: (_) => HomeView());
+          case '/detail':
+            return MaterialPageRoute(builder: (_) => DetailView());
+          case '/rent-book':
+            return MaterialPageRoute(builder: (_) => RentView(rentModel: rentModel));
+          case '/purchase':
+            return MaterialPageRoute(builder: (_) => PurchaseView());
+          case '/library':
+            return MaterialPageRoute(builder: (_) => LibraryView());
+          case '/notification':
+            return MaterialPageRoute(builder: (_) => NotificationView());
+          default:
+            return MaterialPageRoute(
+              builder:
+                  (_) => Scaffold(body: Center(child: Text('Route not found'))),
+            );
+        }
       },
     );
   }
