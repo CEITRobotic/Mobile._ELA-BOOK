@@ -51,11 +51,42 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('HomePage')),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 50,
+          color: Colors.blue,
+          child: Center(child: Text('Fixed Bottom Bar')),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 60),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'ນິຍາຍ',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: const Color(0xFF9E090F),
+                      decorationColor: const Color(0xFF9E090F),
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  SvgPicture.asset(
+                    'assets/icons/profile.svg',
+                    width: 29,
+                    height: 29,
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 12),
 
             // ✅ Carousel section
             CarouselSlider(
@@ -131,7 +162,9 @@ class _HomeViewState extends State<HomeView> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 itemCount: comics[comics.keys.toList()[0]]!.length,
                 itemBuilder: (context, index) {
-                  return ComicCard(item: comics[comics.keys.toList()[0]]![index]);
+                  return ComicCard(
+                    item: comics[comics.keys.toList()[0]]![index],
+                  );
                 },
               ),
             ),
