@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LibraryPage extends StatelessWidget {
+class LibraryView extends StatelessWidget {
   final List<Map<String, String>> rentedBooks = [
     {
       'title': 'ສຸສານລົດເມໂຮງຮຽນ',

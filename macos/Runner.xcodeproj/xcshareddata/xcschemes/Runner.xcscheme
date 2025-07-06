@@ -15,15 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "33CC10EC2044A3C60003C045"
-<<<<<<< HEAD
-<<<<<<< HEAD
                BuildableName = "ela_book.app"
-=======
-               BuildableName = "elarbook.app"
->>>>>>> d96fb9e (ສ່ວນ payment ຮັບຜິດຊອບໂດຍ Josocool)
-=======
-               BuildableName = "elarbook.app"
->>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
                BlueprintName = "Runner"
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
@@ -40,18 +32,10 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
 <<<<<<< HEAD
-<<<<<<< HEAD
             BuildableName = "ela_book.app"
 =======
             BuildableName = "elarbook.app"
->>>>>>> d96fb9e (ສ່ວນ payment ຮັບຜິດຊອບໂດຍ Josocool)
-=======
-            BuildableName = "elarbook.app"
->>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
             BlueprintName = "Runner"
-            ReferencedContainer = "container:Runner.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO"
@@ -83,14 +67,10 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
 <<<<<<< HEAD
-<<<<<<< HEAD
             BuildableName = "ela_book.app"
 =======
             BuildableName = "elarbook.app"
 >>>>>>> d96fb9e (ສ່ວນ payment ຮັບຜິດຊອບໂດຍ Josocool)
-=======
-            BuildableName = "elarbook.app"
->>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
@@ -108,14 +88,10 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
 <<<<<<< HEAD
-<<<<<<< HEAD
             BuildableName = "ela_book.app"
 =======
             BuildableName = "elarbook.app"
 >>>>>>> d96fb9e (ສ່ວນ payment ຮັບຜິດຊອບໂດຍ Josocool)
-=======
-            BuildableName = "elarbook.app"
->>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>

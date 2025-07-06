@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/rent_model.dart';
+import 'package:ela_book/data/models/rent_model.dart';
 
 class RentSummaryPage extends StatelessWidget {
   final RentModel rentModel;

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'purchase_summary_page.dart'; //  ()
+import '../../utils/purchase_summary_page.dart'; //  ()
 
-class PurchasePage extends StatefulWidget {
-  const PurchasePage({Key? key}) : super(key: key);
+class PurchaseView extends StatefulWidget {
+  const PurchaseView({Key? key}) : super(key: key);
 
   @override
-  State<PurchasePage> createState() => _PurchasePageState();
+  State<PurchaseView> createState() => _PurchasePageState();
 }
 
-class _PurchasePageState extends State<PurchasePage> {
+class _PurchasePageState extends State<PurchaseView> {
   int quantity = 1;
   final double pricePerBook = 150.000;
 

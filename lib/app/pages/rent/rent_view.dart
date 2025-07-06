@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '../models/rent_model.dart';
-import '../pages/rent_summary_page.dart';
-import '../widgets/success_dialog.dart';
+import 'package:ela_book/data/models/rent_model.dart';
+import '../../utils/rent_summary_page.dart';
+import '../../widgets/success_dialog.dart';
 
-class RentPage extends StatefulWidget {
+class RentView extends StatefulWidget {
   final RentModel rentModel;
 
-  const RentPage({Key? key, required this.rentModel}) : super(key: key);
+  const RentView({Key? key, required this.rentModel}) : super(key: key);
 
   @override
-  State<RentPage> createState() => _RentPageState();
+  State<RentView> createState() => _RentPageState();
 }
 
-class _RentPageState extends State<RentPage> {
+class _RentPageState extends State<RentView> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController borrowDateController = TextEditingController();
   final TextEditingController returnDateController = TextEditingController();

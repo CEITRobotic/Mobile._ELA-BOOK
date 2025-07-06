@@ -5,23 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-<<<<<<< HEAD
-<<<<<<< HEAD
 PRODUCT_NAME = ela_book
 
 // The application's bundle identifier
 PRODUCT_BUNDLE_IDENTIFIER = com.example.elaBook
-=======
-=======
->>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
-PRODUCT_NAME = elarbook
-
-// The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.elarbook
-<<<<<<< HEAD
->>>>>>> d96fb9e (ສ່ວນ payment ຮັບຜິດຊອບໂດຍ Josocool)
-=======
->>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.
