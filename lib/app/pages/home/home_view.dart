@@ -162,7 +162,9 @@ class _HomeViewState extends State<HomeView> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 itemCount: comics[comics.keys.toList()[0]]!.length,
                 itemBuilder: (context, index) {
-                  return ComicCard(item: comics[comics.keys.toList()[0]]![index]);
+                  return ComicCard(
+                    item: comics[comics.keys.toList()[0]]![index],
+                  );
                 },
               ),
             ),
