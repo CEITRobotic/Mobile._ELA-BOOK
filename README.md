@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # ela_book
+=======
+# elarbook
+>>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
 
 A new Flutter project.
 

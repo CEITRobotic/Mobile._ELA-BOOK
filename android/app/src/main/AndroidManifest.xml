@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+<<<<<<< HEAD
         android:label="ela_book"
+=======
+        android:label="elarbook"
+>>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
