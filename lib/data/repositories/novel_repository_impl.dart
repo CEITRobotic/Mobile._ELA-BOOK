@@ -22,7 +22,7 @@ class NovelRepositoryImpl implements NovelRepository {
   // ---------- Below it's real implement functions ----------
 
   @override
-  Future<List<NovelModel>> getNovelAll() async {
+  Future<List<Novel>> getNovelAll() async {
     final snapshot = await firestore.collection('novels').get();
     return snapshot.docs.map((doc) => NovelModel.fromMap(doc)).toList();
   }
@@ -60,8 +60,8 @@ class NovelRepositoryImpl implements NovelRepository {
 
   @override
   Future<void> likeNovel(String? novelId) async {
-    final log = Logger('LikeNovel <fn>');
     final uid = FirebaseAuth.instance.currentUser!.uid;
+    final log = Logger('LikeNovel <fn>');
 
     final snapshot = await firestore.collection('users').doc(uid).get();
     final likedNovels = List<String>.from(
@@ -82,8 +82,8 @@ class NovelRepositoryImpl implements NovelRepository {
 
   @override
   Future<void> dislikeNovel(String? novelId) async {
-    final log = Logger('DisLikeNovel <fn>');
     final uid = FirebaseAuth.instance.currentUser!.uid;
+    final log = Logger('DisLikeNovel <fn>');
 
     final snapshot = await firestore.collection('users').doc(uid).get();
     final likedNovels = List<String>.from(

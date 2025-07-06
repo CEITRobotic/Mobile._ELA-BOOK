@@ -22,4 +22,9 @@ class Novel {
     this.book,
     this.buy,
   });
+
+  @override
+  String toString() {
+    return 'Novel(id: $id, image: $name, tag: $tag, creator: $creator, like: $like, view: $view, book: $book, buy, $buy)';
+  }
 }
