@@ -6,7 +6,7 @@ class InitNovels {
 
   Future<void> init() async {
     var novel = Novel(
-      image: "assets/images/novel_imgs/1.jpg",
+      image: "https://raw.githubusercontent.com/CEITRobotic/Mobile._ELA-BOOK/main/assets/images/novel_imgs/1.jpg",
       name: 'ຮັກຄືການເດີນທາງ',
       tag: ['ຕະຫລົກ', 'ຄວາມຮັກ'],
       story:
@@ -21,7 +21,7 @@ Suspendisse dapibus at ligula ac scelerisque. Nullam ornare gravida accumsan. Ma
     );
 
     novel = Novel(
-      image: "assets/images/novel_imgs/2.png",
+      image: "https://raw.githubusercontent.com/CEITRobotic/Mobile._ELA-BOOK/main/assets/images/novel_imgs/2.png",
       name: 'ສຸສານລົດເມໂຮງຮຽນ',
       tag: ['ສະຍອງຂວັນ', 'ພະຈົນໄພ', 'ໄວຫນຸ່ມ'],
       story:

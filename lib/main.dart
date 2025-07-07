@@ -69,7 +69,9 @@ class MyApp extends StatelessWidget {
           case '/detail':
             return MaterialPageRoute(builder: (_) => DetailView());
           case '/rent-book':
-            return MaterialPageRoute(builder: (_) => RentView(rentModel: rentModel));
+            return MaterialPageRoute(
+              builder: (_) => RentView(rentModel: rentModel),
+            );
           case '/purchase':
             return MaterialPageRoute(builder: (_) => PurchaseView());
           case '/library':

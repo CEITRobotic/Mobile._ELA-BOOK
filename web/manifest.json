@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
     "name": "ela_book",
     "short_name": "ela_book",
-=======
-    "name": "elarbook",
-    "short_name": "elarbook",
->>>>>>> d96fb9e52a236351a474eaf146ab1aab1b8b3f8c
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

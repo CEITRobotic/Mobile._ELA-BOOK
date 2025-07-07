@@ -9,10 +9,14 @@ class HomeController {
     return novels
         .map(
           (novel) => {
+            'id': novel.id ?? '',
             'storyName': novel.name ?? '',
             'creatorName': novel.creator ?? '',
+            'story': novel.story ?? '',
             'image': novel.image ?? '',
             'like': novel.like.toString(),
+            'rent': novel.book.toString(),
+            'buy': novel.book.toString(),
             'view': novel.view.toString(),
           },
         )
@@ -25,13 +29,21 @@ class HomeController {
     return novels
         .map(
           (novel) => {
+            'id': novel.id ?? '',
             'storyName': novel.name ?? '',
             'creatorName': novel.creator ?? '',
+            'story': novel.story ?? '',
             'image': novel.image ?? '',
             'like': novel.like.toString(),
+            'rent': novel.book.toString(),
+            'buy': novel.book.toString(),
             'view': novel.view.toString(),
           },
         )
         .toList();
+  }
+
+  Future<void> increaseView(String? novelId) async {
+    presenter.increaseView(novelId);
   }
 }

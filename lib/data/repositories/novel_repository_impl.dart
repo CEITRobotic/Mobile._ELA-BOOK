@@ -59,6 +59,13 @@ class NovelRepositoryImpl implements NovelRepository {
   }
 
   @override
+  Future<void> increaseView(String? novelId) async {
+    await firestore.collection('novels').doc(novelId).update({
+      'view': FieldValue.increment(1),
+    });
+  }
+
+  @override
   Future<void> likeNovel(String? novelId) async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     final log = Logger('LikeNovel <fn>');

@@ -6,4 +6,7 @@ class HomePresenter {
 
   Future<List<Novel>> getNovelAll() async =>
       await GetNovelAll(NovelRepositoryImpl())();
+
+  Future<void> increaseView(String? novelId) async =>
+      await InceaseView(NovelRepositoryImpl())(novelId);
 }
