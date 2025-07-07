@@ -11,7 +11,7 @@ class NovelModel extends Novel {
     super.creator,
     super.like,
     super.view,
-    super.book,
+    super.rent,
     super.buy,
     super.price,
   });
@@ -30,7 +30,7 @@ class NovelModel extends Novel {
       creator: data['creator'] ?? '',
       like: data['like'] ?? 0,
       view: data['view'] ?? 0,
-      book: data['book'] ?? 0,
+      rent: data['rent'] ?? 0,
       buy: data['buy'] ?? 0,
       price: data['price'] ?? 0.0,
     );
@@ -45,7 +45,7 @@ class NovelModel extends Novel {
       'creator': creator,
       'like': like,
       'view': view,
-      'book': book,
+      'rent': rent,
       'buy': buy,
       'price': price,
     };

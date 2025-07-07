@@ -152,7 +152,7 @@ class _PurchasePageState extends State<PurchaseView> {
               const SizedBox(height: 8),
               TextFormField(
                 readOnly: true,
-                initialValue: '${pricePerBook.toStringAsFixed(3)} ກີບ',
+                initialValue: '${pricePerBook.toStringAsFixed(1)} ກີບ',
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[100],

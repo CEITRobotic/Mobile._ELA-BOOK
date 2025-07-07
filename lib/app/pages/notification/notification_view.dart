@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ela_book/app/widgets/footer_menu.dart';
 
 class NotificationView extends StatelessWidget {
   const NotificationView({super.key});
@@ -6,6 +7,7 @@ class NotificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const FixedBottomBar(),
       appBar: AppBar(
         titleSpacing: 0,
         automaticallyImplyLeading: false,

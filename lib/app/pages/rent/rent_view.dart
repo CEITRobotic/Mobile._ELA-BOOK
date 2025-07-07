@@ -17,12 +17,20 @@ class RentView extends StatefulWidget {
 }
 
 class _RentPageState extends State<RentView> {
+  late RentModel currentRentModel;
+
   final TextEditingController borrowDateController = TextEditingController();
   final TextEditingController returnDateController = TextEditingController();
 
   DateTime? borrowDate;
   DateTime? returnDate;
   String queueStatus = "";
+
+  @override
+  void initState() {
+    super.initState();
+    currentRentModel = widget.rentModel;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +82,7 @@ class _RentPageState extends State<RentView> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        "ລາຄາເຊົ່າຕໍ່ວັນ: ${rentModel.pricePerDay.toStringAsFixed(2)} ກີບ",
+                        "ລາຄາຜ່ອນຕໍ່ວັນ: ${rentModel.pricePerBook.toStringAsFixed(1)} ກີບ",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -141,6 +149,7 @@ class _RentPageState extends State<RentView> {
                     returnDateController.text =
                         "${picked.toLocal()}".split(' ')[0];
                     _updateQueueStatus();
+                    _updatePricePerDay();
                   });
                 }
               },
@@ -178,7 +187,7 @@ class _RentPageState extends State<RentView> {
                   }
 
                   final days = returnDate!.difference(borrowDate!).inDays;
-                  final totalPrice = days * rentModel.pricePerDay;
+                  final totalPrice = rentModel.pricePerBook / days;
                   final userDoc =
                       await FirebaseFirestore.instance
                           .collection('users')
@@ -228,6 +237,19 @@ class _RentPageState extends State<RentView> {
       }
     } else {
       queueStatus = "";
+    }
+  }
+
+  void _updatePricePerDay() {
+    if (borrowDate != null && returnDate != null) {
+      final days = returnDate!.difference(borrowDate!).inDays;
+      if (days > 0) {
+        final totalPrice = days * widget.rentModel.pricePerBook;
+
+        setState(() {
+          currentRentModel = currentRentModel.copyWith(pricePerDay: totalPrice);
+        });
+      }
     }
   }
 }

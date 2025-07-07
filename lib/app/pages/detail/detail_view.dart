@@ -100,7 +100,7 @@ class DetailView extends StatelessWidget {
                         children: [
                           IconText(
                             icon: Icons.favorite,
-                            label: '${novel['like'] ?? ''} ຄົນຖືກໃຈເລື່ອງນີ້',
+                            label: '${novel['like'] ?? 0} ຄົນຖືກໃຈເລື່ອງນີ້',
                             color: const Color(0xFF9E090F),
                           ),
                           SizedBox(width: 4),
@@ -108,17 +108,17 @@ class DetailView extends StatelessWidget {
                             children: [
                               IconText(
                                 icon: Icons.visibility_outlined,
-                                label: "${novel['view'] ?? ''}",
+                                label: "${novel['view'] ?? 0}",
                               ),
                               SizedBox(width: 12),
                               IconText(
                                 icon: Icons.collections_bookmark_outlined,
-                                label: "${novel['rent'] ?? ''}",
+                                label: "${novel['rent'] ?? 0}",
                               ),
                               SizedBox(width: 12),
                               IconText(
                                 icon: Icons.shopping_cart_outlined,
-                                label: "${novel['buy'] ?? ''}",
+                                label: "${novel['buy'] ?? 0}",
                               ),
                             ],
                           ),
@@ -151,6 +151,7 @@ class DetailView extends StatelessWidget {
                                             image: novel['image'],
                                             views: novel['view'],
                                             likes: novel['like'],
+                                            pricePerBook: novel['price'],
                                             rating: double.parse(
                                               ((int.tryParse(
                                                             novel['view']

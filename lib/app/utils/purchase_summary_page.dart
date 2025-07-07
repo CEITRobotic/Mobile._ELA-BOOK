@@ -179,7 +179,7 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
               children: [
                 const Text('ລາຄາຕໍ່ຫົວ', style: TextStyle(fontSize: 16)),
                 Text(
-                  '${widget.pricePerBook.toStringAsFixed(3)} ກີບ',
+                  '${widget.pricePerBook.toStringAsFixed(1)} ກີບ',
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
@@ -193,7 +193,7 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '${total.toStringAsFixed(3)} ກີບ',
+                  '${total.toStringAsFixed(1)} ກີບ',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

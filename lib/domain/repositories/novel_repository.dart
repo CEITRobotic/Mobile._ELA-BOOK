@@ -8,6 +8,6 @@ abstract class NovelRepository {
   Future<void> increaseView(String? novelId);
   Future<void> likeNovel(String? novelId);
   Future<void> dislikeNovel(String? novelId);
-  Future<void> rentNovel();
-  Future<void> buyNovel();
+  Future<void> rentNovel(String? novelId);
+  Future<void> buyNovel(String? novelId);
 }

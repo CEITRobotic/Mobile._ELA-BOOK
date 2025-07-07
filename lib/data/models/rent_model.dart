@@ -2,7 +2,6 @@ class RentModel {
   final String image;
   final String title;
   final String author;
-  final double pricePerDay;
   final int queueCount;
   final DateTime? availableDate;
   final int likes; // ❤️ ຈຳນວນຄົນຖືກໃຈ
@@ -15,7 +14,6 @@ class RentModel {
     this.image = '',
     this.title = '',
     this.author = '',
-    this.pricePerDay = 0.0,
     this.queueCount = 0,
     this.availableDate,
     this.likes = 0,
@@ -30,7 +28,6 @@ class RentModel {
     String? title,
     String? author,
     double? pricePerDay,
-    int? queueCount,
     DateTime? availableDate,
     int? likes,
     double? rating,
@@ -41,8 +38,6 @@ class RentModel {
       image: image ?? this.image,
       title: title ?? this.title,
       author: author ?? this.author,
-      pricePerDay: pricePerDay ?? this.pricePerDay,
-      queueCount: queueCount ?? this.queueCount,
       availableDate: availableDate ?? this.availableDate,
       likes: likes ?? this.likes,
       rating: rating ?? this.rating,

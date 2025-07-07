@@ -2,6 +2,7 @@ import 'package:ela_book/app/pages/detail/detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ela_book/app/widgets/footer_menu.dart';
 import 'home_controller.dart';
 
 final controller = HomeController();
@@ -53,13 +54,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 50,
-          color: Colors.blue,
-          child: Center(child: Text('Fixed Bottom Bar')),
-        ),
-      ),
+      bottomNavigationBar: const FixedBottomBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ela_book/app/widgets/footer_menu.dart';
 
 class LibraryView extends StatelessWidget {
   final List<Map<String, String>> rentedBooks = [
@@ -19,6 +20,7 @@ class LibraryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const FixedBottomBar(),
       backgroundColor: const Color(0xFFF9F9F9),
       appBar: AppBar(
         backgroundColor: Colors.white,
