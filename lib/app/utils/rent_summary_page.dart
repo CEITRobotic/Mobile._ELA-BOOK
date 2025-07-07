@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ela_book/data/models/rent_model.dart';
+import 'package:ela_book/barrel/novel.dart';
 
 class RentSummaryPage extends StatelessWidget {
   final RentModel rentModel;
@@ -85,7 +86,9 @@ class RentSummaryPage extends StatelessWidget {
             const SizedBox(height: 24),
             Center(
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  await RentNovel(NovelRepositoryImpl())(rentModel.id);
+
                   showDialog(
                     context: context,
                     builder:

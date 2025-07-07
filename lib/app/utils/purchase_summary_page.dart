@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:ela_book/data/models/rent_model.dart';
+import 'package:ela_book/barrel/novel.dart';
 import 'package:flutter/material.dart';
 
 class PurchaseSummaryPage extends StatefulWidget {
@@ -45,7 +46,9 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
     });
   }
 
-  void _showPaymentSuccessDialog() {
+  void _showPaymentSuccessDialog() async {
+    await BuyNovel(NovelRepositoryImpl())(widget.rentModel.id);
+
     if (_isPaid) return;
 
     setState(() {

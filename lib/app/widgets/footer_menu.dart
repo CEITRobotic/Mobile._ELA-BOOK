@@ -2,6 +2,8 @@ import 'package:ela_book/app/pages/home/home_view.dart';
 import 'package:ela_book/app/pages/library/library_view.dart';
 import 'package:ela_book/app/pages/notification/notification_view.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FixedBottomBar extends StatefulWidget {
   const FixedBottomBar({super.key});
@@ -17,6 +19,34 @@ class _FixedBottomBarState extends State<FixedBottomBar> {
     setState(() {
       selectedIndex = index;
     });
+    saveSelectedIndex(index);
+  }
+
+  Future<void> saveSelectedIndex(int index) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance.collection('users').doc(uid).update({
+      'indexSelection': index,
+    });
+  }
+
+  Future<void> loadSelectedIndex() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final doc =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+    if (doc.exists &&
+        doc.data() != null &&
+        doc.data()!.containsKey('indexSelection')) {
+      setState(() {
+        selectedIndex = doc['indexSelection'] as int;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadSelectedIndex();
   }
 
   @override

@@ -1,4 +1,5 @@
 class RentModel {
+  final String id;
   final String image;
   final String title;
   final String author;
@@ -11,6 +12,7 @@ class RentModel {
   final double pricePerBook;
 
   const RentModel({
+    this.id = '',
     this.image = '',
     this.title = '',
     this.author = '',

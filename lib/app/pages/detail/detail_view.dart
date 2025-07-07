@@ -146,6 +146,7 @@ class DetailView extends StatelessWidget {
                                     builder:
                                         (context) => RentView(
                                           rentModel: RentModel(
+                                            id: novel['id'],
                                             title: novel['storyName'],
                                             author: novel['creatorName'],
                                             image: novel['image'],
@@ -187,6 +188,7 @@ class DetailView extends StatelessWidget {
                                     builder:
                                         (context) => PurchaseView(
                                           rentModel: RentModel(
+                                            id: novel['id'],
                                             title: novel['storyName'],
                                             author: novel['creatorName'],
                                             image: novel['image'],

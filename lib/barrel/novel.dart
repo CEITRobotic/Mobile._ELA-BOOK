@@ -7,6 +7,8 @@ export 'package:ela_book/domain/usecases/get_novel_from_tag.dart';
 export 'package:ela_book/domain/usecases/dislike_novel.dart';
 export 'package:ela_book/domain/usecases/like_novel.dart';
 export 'package:ela_book/domain/usecases/incease_view.dart';
+export 'package:ela_book/domain/usecases/buy_novel.dart';
+export 'package:ela_book/domain/usecases/rent_novel.dart';
 
 
 // Example: Get all novels

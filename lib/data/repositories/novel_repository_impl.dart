@@ -118,7 +118,7 @@ class NovelRepositoryImpl implements NovelRepository {
       snapshot.data()?['rented_novels'] ?? [],
     );
 
-    if (!likedNovels.contains(novelId)) {
+    if (likedNovels.contains(novelId)) {
       return;
     }
 
@@ -128,9 +128,25 @@ class NovelRepositoryImpl implements NovelRepository {
     await firestore.collection('novels').doc(novelId).update({
       'rent': FieldValue.increment(1),
     });
-
   }
 
   @override
-  Future<void> buyNovel(String? novelId) async {}
+  Future<void> buyNovel(String? novelId) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    final snapshot = await firestore.collection('users').doc(uid).get();
+    final likedNovels = List<String>.from(
+      snapshot.data()?['buy_novels'] ?? [],
+    );
+
+    if (likedNovels.contains(novelId)) {
+      return;
+    }
+
+    await firestore.collection('users').doc(uid).update({
+      'buy_novels': FieldValue.arrayUnion([novelId]),
+    });
+    await firestore.collection('novels').doc(novelId).update({
+      'buy': FieldValue.increment(1),
+    });
+  }
 }
