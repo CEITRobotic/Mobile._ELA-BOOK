@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ela_book/data/models/rent_model.dart';
+import 'package:ela_book/barrel/novel.dart';
 
 class RentSummaryPage extends StatelessWidget {
   final RentModel rentModel;
@@ -30,8 +31,8 @@ class RentSummaryPage extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset(
-                  'assets/Rakkhuekarnderntharng.jpg',
+                Image.network(
+                  rentModel.image,
                   width: 100,
                   height: 140,
                   fit: BoxFit.cover,
@@ -40,21 +41,27 @@ class RentSummaryPage extends StatelessWidget {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text("ຊື່: ຮັກຄືການເດິນທາງ", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    children: [
+                      Text(
+                        "ຊື່: ${rentModel.title}",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(height: 4),
-                      Text("ຜູ້ຂຽນ: ຈັນມາລາ ແກ້ວໄຊສີ"),
+                      Text("ຜູ້ຂຽນ: ${rentModel.author}"),
                       SizedBox(height: 4),
-                      Text("ເຂົ້າເບິ່ງ: 1234 ຄັ້ງ"),
+                      Text("ເຂົ້າເບິ່ງ: ${rentModel.views} ຄັ້ງ"),
                       SizedBox(height: 4),
                       Row(
                         children: [
                           Icon(Icons.favorite, color: Colors.red, size: 20),
                           SizedBox(width: 3),
-                          Text("99"),
+                          Text("${rentModel.likes}"),
                           SizedBox(width: 12),
                           Icon(Icons.star, color: Colors.amber, size: 20),
-                          Text("4.5"),
+                          Text("${rentModel.rating}"),
                         ],
                       ),
                     ],
@@ -68,48 +75,58 @@ class RentSummaryPage extends StatelessWidget {
             const SizedBox(height: 8),
             Text("ຈຳນວນມື້: $days ມື້", style: TextStyle(fontSize: 16)),
             const SizedBox(height: 8),
-            Text("ລາຄາລວມ: \$${totalPrice.toStringAsFixed(2)}", style: TextStyle(fontSize: 16)),
+            Text(
+              "ລາຄາລວມ: \$${totalPrice.toStringAsFixed(2)}",
+              style: TextStyle(fontSize: 16),
+            ),
 
             const SizedBox(height: 24),
-            Center(
-              child: Image.asset(
-                'assets/qr_code.jpeg',
-                width: 250,
-              ),
-            ),
+            Center(child: Image.asset('assets/qr_code.jpeg', width: 250)),
 
             const SizedBox(height: 24),
             Center(
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  await RentNovel(NovelRepositoryImpl())(rentModel.id);
+
                   showDialog(
                     context: context,
-                    builder: (context) => AlertDialog(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      title: Row(
-                        children: const [
-                          Icon(Icons.check_circle, color: Colors.green, size: 28),
-                          SizedBox(width: 8),
-                          Text("ສຳເລັດແລ້ວ"),
-                        ],
-                      ),
-                      content: const Text("ການຊຳລະເງິນສຳເລັດແລ້ວ!"),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text("ຕົກລົງ"),
+                    builder:
+                        (context) => AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          title: Row(
+                            children: const [
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                                size: 28,
+                              ),
+                              SizedBox(width: 8),
+                              Text("ສຳເລັດແລ້ວ"),
+                            ],
+                          ),
+                          content: const Text("ການຊຳລະເງິນສຳເລັດແລ້ວ!"),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text("ຕົກລົງ"),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
                 ),
-                child: Text("ຊຳລະເງິນ", style: TextStyle(color: Colors.white, fontSize: 16)),
+                child: Text(
+                  "ຊຳລະເງິນ",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ela_book/data/models/rent_model.dart';
 import '../../utils/rent_summary_page.dart';
-import '../../widgets/success_dialog.dart';
+// import '../../widgets/success_dialog.dart';
 
 class RentView extends StatefulWidget {
   final RentModel rentModel;
 
-  const RentView({Key? key, required this.rentModel}) : super(key: key);
+  RentView({Key? key, RentModel? rentModel})
+    : rentModel = rentModel ?? const RentModel(),
+      super(key: key);
 
   @override
   State<RentView> createState() => _RentPageState();
 }
 
 class _RentPageState extends State<RentView> {
-  final TextEditingController nameController = TextEditingController();
+  late RentModel currentRentModel;
+
   final TextEditingController borrowDateController = TextEditingController();
   final TextEditingController returnDateController = TextEditingController();
 
   DateTime? borrowDate;
   DateTime? returnDate;
   String queueStatus = "";
+
+  @override
+  void initState() {
+    super.initState();
+    currentRentModel = widget.rentModel;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +47,8 @@ class _RentPageState extends State<RentView> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  'assets/Rakkhuekarnderntharng.jpg',
+                Image.network(
+                  rentModel.image,
                   width: 100,
                   height: 140,
                   fit: BoxFit.cover,
@@ -49,27 +60,34 @@ class _RentPageState extends State<RentView> {
                     children: [
                       Text(
                         rentModel.title,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text("ຜູ້ຂຽນ: ${rentModel.author}"),
                       const SizedBox(height: 4),
-                      const Text("ເຂົ້າເບິ່ງ: 1234 ຄັ້ງ"),
+                      Text("ເຂົ້າເບິ່ງ: ${rentModel.views}"),
                       const SizedBox(height: 4),
-                      const Row(
+                      Row(
                         children: [
                           Icon(Icons.favorite, color: Colors.red, size: 20),
                           SizedBox(width: 3),
-                          Text("99"),
+                          Text('${rentModel.likes}'),
                           SizedBox(width: 12),
                           Icon(Icons.star, color: Colors.amber, size: 20),
-                          Text("4.5"),
+                          Text('${rentModel.rating}'),
                         ],
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        "ລາຄາເຊົ່າຕໍ່ວັນ: ${rentModel.pricePerDay.toStringAsFixed(2)} ກີບ",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
+                        "ລາຄາຜ່ອນຕໍ່ວັນ: ${rentModel.pricePerBook.toStringAsFixed(1)} ກີບ",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
                       ),
                     ],
                   ),
@@ -78,17 +96,6 @@ class _RentPageState extends State<RentView> {
             ),
 
             const SizedBox(height: 20),
-
-            // Name input
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: "ຊື່ຜູ້ຍືມ",
-                border: OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 16),
 
             // Borrow date
             TextField(
@@ -109,7 +116,8 @@ class _RentPageState extends State<RentView> {
                 if (picked != null) {
                   setState(() {
                     borrowDate = picked;
-                    borrowDateController.text = "${picked.toLocal()}".split(' ')[0];
+                    borrowDateController.text =
+                        "${picked.toLocal()}".split(' ')[0];
                     _updateQueueStatus();
                   });
                 }
@@ -130,15 +138,18 @@ class _RentPageState extends State<RentView> {
               onTap: () async {
                 final picked = await showDatePicker(
                   context: context,
-                  initialDate: returnDate ?? DateTime.now().add(Duration(days: 1)),
+                  initialDate:
+                      returnDate ?? DateTime.now().add(Duration(days: 1)),
                   firstDate: borrowDate ?? DateTime.now(),
                   lastDate: DateTime(2100),
                 );
                 if (picked != null) {
                   setState(() {
                     returnDate = picked;
-                    returnDateController.text = "${picked.toLocal()}".split(' ')[0];
+                    returnDateController.text =
+                        "${picked.toLocal()}".split(' ')[0];
                     _updateQueueStatus();
+                    _updatePricePerDay();
                   });
                 }
               },
@@ -167,8 +178,8 @@ class _RentPageState extends State<RentView> {
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                onPressed: () {
-                  if (nameController.text.isEmpty || borrowDate == null || returnDate == null) {
+                onPressed: () async {
+                  if (borrowDate == null || returnDate == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("ກະລຸນາກຮອກຂໍ້ມູນໃຫ້ຄົບ")),
                     );
@@ -176,18 +187,26 @@ class _RentPageState extends State<RentView> {
                   }
 
                   final days = returnDate!.difference(borrowDate!).inDays;
-                  final totalPrice = days * rentModel.pricePerDay;
+                  final totalPrice = rentModel.pricePerBook / days;
+                  final userDoc =
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser?.uid)
+                          .get();
+
+                  final borrowerName = userDoc.data()?['name'] ?? '';
 
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => RentSummaryPage(
-                        rentModel: rentModel,
-                        borrowerName: nameController.text,
-                        borrowDate: borrowDate!,
-                        returnDate: returnDate!,
-                        totalPrice: totalPrice,
-                      ),
+                      builder:
+                          (_) => RentSummaryPage(
+                            rentModel: rentModel,
+                            borrowerName: borrowerName,
+                            borrowDate: borrowDate!,
+                            returnDate: returnDate!,
+                            totalPrice: totalPrice,
+                          ),
                     ),
                   );
                 },
@@ -218,6 +237,19 @@ class _RentPageState extends State<RentView> {
       }
     } else {
       queueStatus = "";
+    }
+  }
+
+  void _updatePricePerDay() {
+    if (borrowDate != null && returnDate != null) {
+      final days = returnDate!.difference(borrowDate!).inDays;
+      if (days > 0) {
+        final totalPrice = days * widget.rentModel.pricePerBook;
+
+        setState(() {
+          currentRentModel = currentRentModel.copyWith(pricePerDay: totalPrice);
+        });
+      }
     }
   }
 }

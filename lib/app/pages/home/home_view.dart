@@ -1,7 +1,11 @@
+import 'package:ela_book/app/pages/detail/detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ela_book/app/widgets/footer_menu.dart';
 import 'home_controller.dart';
+
+final controller = HomeController();
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -11,17 +15,16 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final controller = HomeController();
   final List<String> imageUrls = [
-    'assets/images/ads_imgs/1.jpg',
-    'assets/images/ads_imgs/2.jpg',
-    'assets/images/ads_imgs/3.jpg',
+    'https://raw.githubusercontent.com/CEITRobotic/Mobile._ELA-BOOK/main/assets/images/ads_imgs/1.jpg',
+    'https://raw.githubusercontent.com/CEITRobotic/Mobile._ELA-BOOK/main/assets/images/ads_imgs/2.jpg',
+    'https://raw.githubusercontent.com/CEITRobotic/Mobile._ELA-BOOK/main/assets/images/ads_imgs/3.jpg',
   ];
 
-  Map<String, List<Map<String, String>>> comics = {
+  Map<String, List<Map<String, dynamic>>> comics = {
     'ໄວຫນຸ່ມ': [],
     'ຄວາມຮັກ': [],
-    'ອື່ນໆ': [],
+    'ອື່ນໆ...': [],
   };
   bool isLoading = true;
 
@@ -40,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
     setState(() {
       comics['ໄວຫນຸ່ມ'] = results[0];
       comics['ຄວາມຮັກ'] = results[1];
-      comics['ອື່ນໆ'] = results[2];
+      comics['ອື່ນໆ...'] = results[2];
       isLoading = false;
     });
   }
@@ -51,13 +54,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 50,
-          color: Colors.blue,
-          child: Center(child: Text('Fixed Bottom Bar')),
-        ),
-      ),
+      bottomNavigationBar: const FixedBottomBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -200,7 +197,7 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 12),
 
             // ✅ Comic section title
             Padding(
@@ -232,15 +229,6 @@ class _HomeViewState extends State<HomeView> {
             ),
 
             const SizedBox(height: 20),
-
-            // ✅ Navigation button
-            ElevatedButton(
-              child: Text('Go to DetailPage'),
-              onPressed: () {
-                Navigator.pushNamed(context, "/detail");
-              },
-            ),
-            const SizedBox(height: 40),
           ],
         ),
       ),
@@ -249,84 +237,103 @@ class _HomeViewState extends State<HomeView> {
 }
 
 class ComicCard extends StatelessWidget {
-  final Map<String, String> item;
+  final Map<String, dynamic> item;
 
   const ComicCard({required this.item});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      margin: const EdgeInsets.only(right: 12),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 4,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ✅ Comic image
-            ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-              child: Image.network(
-                item['image'] ?? '',
-                height: 120,
-                width: double.infinity,
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        controller.increaseView(item['id']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DetailView(novel: item)),
+        );
+      },
+      child: Container(
+        width: 160,
+        margin: const EdgeInsets.only(right: 12),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          elevation: 4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // ✅ Comic image
+              ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                child: Image.network(
+                  item['image'] ?? '',
+                  height: 120,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
 
-            // ✅ Comic text + icons
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/feather.svg',
-                        width: 8,
-                        height: 10,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        item['storyName'] ?? '',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
+              // ✅ Comic text + icons
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/feather.svg',
+                          width: 8,
+                          height: 10,
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    item['creatorName'] ?? '',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Icon(Icons.remove_red_eye, size: 14, color: Colors.grey),
-                      const SizedBox(width: 4),
-                      Text(
-                        item['view'] ?? '',
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                      const SizedBox(width: 12),
-                      Icon(Icons.favorite_border, size: 14, color: Colors.grey),
-                      const SizedBox(width: 4),
-                      Text(
-                        item['like'] ?? '',
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ],
+                        const SizedBox(width: 4),
+                        Text(
+                          item['storyName'] ?? '',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      item['creatorName'] ?? '',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.remove_red_eye,
+                          size: 14,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          "${item['view'] ?? 0}",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                        const SizedBox(width: 12),
+                        Icon(
+                          Icons.favorite_border,
+                          size: 14,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          "${item['like'] ?? 0}",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

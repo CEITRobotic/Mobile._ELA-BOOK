@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:ela_book/data/models/rent_model.dart';
 import '../../utils/purchase_summary_page.dart'; //  ()
 
 class PurchaseView extends StatefulWidget {
-  const PurchaseView({Key? key}) : super(key: key);
+  final RentModel rentModel;
+
+  PurchaseView({Key? key, RentModel? rentModel})
+    : rentModel = rentModel ?? const RentModel(),
+      super(key: key);
 
   @override
   State<PurchaseView> createState() => _PurchasePageState();
@@ -10,22 +15,32 @@ class PurchaseView extends StatefulWidget {
 
 class _PurchasePageState extends State<PurchaseView> {
   int quantity = 1;
-  final double pricePerBook = 150.000;
+  late double pricePerBook;
+
+  @override
+  void initState() {
+    super.initState();
+    pricePerBook = widget.rentModel.pricePerBook;
+  }
 
   void _goToSummaryPage() {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => PurchaseSummaryPage(
-          quantity: quantity,
-          pricePerBook: pricePerBook,
-        ),
+        builder:
+            (_) => PurchaseSummaryPage(
+              rentModel: widget.rentModel,
+              quantity: quantity,
+              pricePerBook: pricePerBook,
+            ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final rentModel = widget.rentModel;
+
     return Scaffold(
       appBar: AppBar(title: const Text('ຊື້ໜັງສື')),
       body: Padding(
@@ -40,8 +55,8 @@ class _PurchasePageState extends State<PurchaseView> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      'assets/Rakkhuekarnderntharng.jpg',
+                    child: Image.network(
+                      rentModel.image,
                       width: 100,
                       height: 140,
                       fit: BoxFit.cover,
@@ -51,15 +66,18 @@ class _PurchasePageState extends State<PurchaseView> {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
-                          'ຮັກຄືການເດີນທາງ',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          rentModel.title,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         SizedBox(height: 6),
-                        Text('ຜູ້ຂຽນ: lorem ipsum'),
+                        Text('ຜູ້ຂຽນ: ${rentModel.author}'),
                         SizedBox(height: 6),
-                        Text('ໝວດ: Drama, Love, Life'),
+                        Text('ໝວດ: ${rentModel.tags.join(', ')}'),
                         SizedBox(height: 6),
                         Row(
                           children: [
@@ -67,9 +85,13 @@ class _PurchasePageState extends State<PurchaseView> {
                             Icon(Icons.star, color: Colors.amber, size: 16),
                             Icon(Icons.star, color: Colors.amber, size: 16),
                             Icon(Icons.star, color: Colors.amber, size: 16),
-                            Icon(Icons.star_half, color: Colors.amber, size: 16),
+                            Icon(
+                              Icons.star_half,
+                              color: Colors.amber,
+                              size: 16,
+                            ),
                             SizedBox(width: 6),
-                            Text('4.5'),
+                            Text('${rentModel.rating}'),
                           ],
                         ),
                       ],
@@ -87,7 +109,7 @@ class _PurchasePageState extends State<PurchaseView> {
               ),
               const SizedBox(height: 8),
               const Text(
-                'ເນື່ອຫາເຂັ້ມຂົນ້ ນ່າຕິດຕາມ ອ່ານແລ້ວອິນທີ່ສຸດ\nເໝາະສຳລັບຜູ້ອ່ານທີ່ມັກແນວຮັກ ຊື້ງກິນໃຈ\nຖ່າຍທອດອາລົມໄດ້ດີຫຼາຍໆ',
+                'ເນື່ອຫາເຂັ້ມຂົ້ນ ນ່າຕິດຕາມ ອ່ານແລ້ວອິນທີ່ສຸດ\nເໝາະສຳລັບຜູ້ອ່ານທີ່ມັກແນວຮັກ ຊື້ງກິນໃຈ\nຖ່າຍທອດອາລົມໄດ້ດີຫຼາຍໆ',
               ),
 
               const SizedBox(height: 20),
@@ -108,10 +130,7 @@ class _PurchasePageState extends State<PurchaseView> {
                     },
                     icon: const Icon(Icons.remove_circle_outline),
                   ),
-                  Text(
-                    '$quantity',
-                    style: const TextStyle(fontSize: 16),
-                  ),
+                  Text('$quantity', style: const TextStyle(fontSize: 16)),
                   IconButton(
                     onPressed: () {
                       setState(() {
@@ -133,7 +152,7 @@ class _PurchasePageState extends State<PurchaseView> {
               const SizedBox(height: 8),
               TextFormField(
                 readOnly: true,
-                initialValue: '${pricePerBook.toStringAsFixed(3)} ກີບ',
+                initialValue: '${pricePerBook.toStringAsFixed(1)} ກີບ',
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[100],
@@ -141,7 +160,10 @@ class _PurchasePageState extends State<PurchaseView> {
                     borderRadius: BorderRadius.circular(8),
                     borderSide: const BorderSide(color: Colors.grey),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 14,
+                  ),
                 ),
               ),
 

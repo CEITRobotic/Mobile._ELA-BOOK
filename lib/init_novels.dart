@@ -6,7 +6,7 @@ class InitNovels {
 
   Future<void> init() async {
     var novel = Novel(
-      image: "assets/images/novel_imgs/1.jpg",
+      image: "https://raw.githubusercontent.com/CEITRobotic/Mobile._ELA-BOOK/main/assets/images/novel_imgs/1.jpg",
       name: 'ຮັກຄືການເດີນທາງ',
       tag: ['ຕະຫລົກ', 'ຄວາມຮັກ'],
       story:
@@ -14,6 +14,7 @@ class InitNovels {
 
 Suspendisse dapibus at ligula ac scelerisque. Nullam ornare gravida accumsan. Maecenas fringilla nisl eu ornare blandit. Ut feugiat ac neque sit amet porta. Quisque dictum est a fringilla dictum. Nam euismod libero a ante ultricies, quis euismod quam pretium. Vestibulum quis posuere metus. Duis sit amet auctor felis. Aliquam arcu ex, maximus at nunc sit amet, lobortis malesuada elit. Etiam sit amet ligula sed nibh tempus maximus ac nec justo. Vivamus tristique porta nibh at laoreet. Duis id ultricies nunc. Aenean eget vestibulum sem. Nam non finibus mi. Morbi at turpis tortor.''',
       creator: 'Jando',
+      price: 50000.0,
     );
 
     log.info(
@@ -21,7 +22,7 @@ Suspendisse dapibus at ligula ac scelerisque. Nullam ornare gravida accumsan. Ma
     );
 
     novel = Novel(
-      image: "assets/images/novel_imgs/2.png",
+      image: "https://raw.githubusercontent.com/CEITRobotic/Mobile._ELA-BOOK/main/assets/images/novel_imgs/2.png",
       name: 'ສຸສານລົດເມໂຮງຮຽນ',
       tag: ['ສະຍອງຂວັນ', 'ພະຈົນໄພ', 'ໄວຫນຸ່ມ'],
       story:
@@ -29,6 +30,7 @@ Suspendisse dapibus at ligula ac scelerisque. Nullam ornare gravida accumsan. Ma
 
 Suspendisse dapibus at ligula ac scelerisque. Nullam ornare gravida accumsan. Maecenas fringilla nisl eu ornare blandit. Ut feugiat ac neque sit amet porta. Quisque dictum est a fringilla dictum. Nam euismod libero a ante ultricies, quis euismod quam pretium. Vestibulum quis posuere metus. Duis sit amet auctor felis. Aliquam arcu ex, maximus at nunc sit amet, lobortis malesuada elit. Etiam sit amet ligula sed nibh tempus maximus ac nec justo. Vivamus tristique porta nibh at laoreet. Duis id ultricies nunc. Aenean eget vestibulum sem. Nam non finibus mi. Morbi at turpis tortor.''',
       creator: 'Jando',
+      price: 60000.0,
     );
 
     log.info(

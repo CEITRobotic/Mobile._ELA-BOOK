@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:logging/logging.dart';
-import 'package:ela_book/data/models/rent_model.dart';
 import 'firebase_options.dart';
 import 'init_novels.dart';
 
@@ -43,11 +42,7 @@ void main() async {
   runApp(MyApp());
 }
 
-final rentModel = RentModel(
-  title: "ພຽງໃຈໃນຄວາມຝັນ",
-  author: "ອີຫຼ້າບຸກ",
-  pricePerDay: 10.0,
-);
+int selectedIndex = 0;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -69,7 +64,7 @@ class MyApp extends StatelessWidget {
           case '/detail':
             return MaterialPageRoute(builder: (_) => DetailView());
           case '/rent-book':
-            return MaterialPageRoute(builder: (_) => RentView(rentModel: rentModel));
+            return MaterialPageRoute(builder: (_) => RentView());
           case '/purchase':
             return MaterialPageRoute(builder: (_) => PurchaseView());
           case '/library':
