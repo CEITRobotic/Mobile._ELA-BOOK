@@ -13,6 +13,7 @@ class NovelModel extends Novel {
     super.view,
     super.book,
     super.buy,
+    super.price,
   });
 
   factory NovelModel.fromMap(DocumentSnapshot doc) {
@@ -31,6 +32,7 @@ class NovelModel extends Novel {
       view: data['view'] ?? 0,
       book: data['book'] ?? 0,
       buy: data['buy'] ?? 0,
+      price: data['price'] ?? 0.0,
     );
   }
 
@@ -45,6 +47,7 @@ class NovelModel extends Novel {
       'view': view,
       'book': book,
       'buy': buy,
+      'price': price,
     };
   }
 }

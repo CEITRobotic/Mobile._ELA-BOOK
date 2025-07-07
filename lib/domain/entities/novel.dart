@@ -8,7 +8,9 @@ class Novel {
   final int? like;
   final int? view;
   final int? book;
+  final int? rent;
   final int? buy;
+  final double? price;
 
   Novel({
     this.id,
@@ -20,11 +22,13 @@ class Novel {
     this.like,
     this.view,
     this.book,
+    this.rent,
     this.buy,
+    this.price,
   });
 
   @override
   String toString() {
-    return 'Novel(id: $id, image: $name, tag: $tag, creator: $creator, like: $like, view: $view, book: $book, buy, $buy)';
+    return 'Novel(id: $id, image: $name, tag: $tag, creator: $creator, like: $like, view: $view, book: $book, buy: $buy, price: $price)';
   }
 }

@@ -3,7 +3,7 @@ import 'home_presenter.dart';
 class HomeController {
   final HomePresenter presenter = HomePresenter();
 
-  Future<List<Map<String, String>>> mapDatasFromTag(String? tag) async {
+  Future<List<Map<String, dynamic>>> mapDatasFromTag(String? tag) async {
     final novels = await presenter.getNovelFromTag(tag);
 
     return novels
@@ -14,16 +14,18 @@ class HomeController {
             'creatorName': novel.creator ?? '',
             'story': novel.story ?? '',
             'image': novel.image ?? '',
-            'like': novel.like.toString(),
-            'rent': novel.book.toString(),
-            'buy': novel.book.toString(),
-            'view': novel.view.toString(),
+            'like': novel.like,
+            'rent': novel.rent,
+            'buy': novel.book,
+            'view': novel.view,
+            'tag': novel.tag,
+            'price': novel.price,
           },
         )
         .toList();
   }
 
-  Future<List<Map<String, String>>> mapAllDatas() async {
+  Future<List<Map<String, dynamic>>> mapAllDatas() async {
     final novels = await presenter.getNovelAll();
 
     return novels
@@ -34,10 +36,12 @@ class HomeController {
             'creatorName': novel.creator ?? '',
             'story': novel.story ?? '',
             'image': novel.image ?? '',
-            'like': novel.like.toString(),
-            'rent': novel.book.toString(),
-            'buy': novel.book.toString(),
-            'view': novel.view.toString(),
+            'like': novel.like,
+            'rent': novel.rent,
+            'buy': novel.book,
+            'view': novel.view,
+            'tag': novel.tag,
+            'price': novel.price,
           },
         )
         .toList();

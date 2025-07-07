@@ -1,10 +1,13 @@
 import 'package:ela_book/app/pages/detail/detail_controller.dart';
+import 'package:ela_book/data/models/rent_model.dart';
 import 'package:flutter/material.dart';
+import 'package:ela_book/app/pages/rent/rent_view.dart';
+import 'package:ela_book/app/pages/purchase/purchase_view.dart';
 
 class DetailView extends StatelessWidget {
-  final Map<String, String> novel;
+  final Map<String, dynamic> novel;
 
-  const DetailView({super.key, Map<String, String>? novel})
+  const DetailView({super.key, Map<String, dynamic>? novel})
     : novel =
           novel ??
           const {
@@ -13,10 +16,12 @@ class DetailView extends StatelessWidget {
             'creatorName': '',
             'story': '',
             'image': '',
-            'like': '',
-            'rent': '',
-            'buy': '',
-            'view': '',
+            'like': 0,
+            'rent': 0,
+            'buy': 0,
+            'view': 0,
+            'tags': [],
+            'price': 0.0,
           };
 
   @override
@@ -31,6 +36,7 @@ class DetailView extends StatelessWidget {
                 expandedHeight: 300,
                 pinned: true,
                 backgroundColor: Colors.black,
+                automaticallyImplyLeading: false,
                 flexibleSpace: FlexibleSpaceBar(
                   background: ClipRRect(
                     borderRadius: const BorderRadius.only(
@@ -102,17 +108,17 @@ class DetailView extends StatelessWidget {
                             children: [
                               IconText(
                                 icon: Icons.visibility_outlined,
-                                label: novel['view'] ?? '',
+                                label: "${novel['view'] ?? ''}",
                               ),
                               SizedBox(width: 12),
                               IconText(
                                 icon: Icons.collections_bookmark_outlined,
-                                label: novel['rent'] ?? '',
+                                label: "${novel['rent'] ?? ''}",
                               ),
                               SizedBox(width: 12),
                               IconText(
                                 icon: Icons.shopping_cart_outlined,
-                                label: novel['buy'] ?? '',
+                                label: "${novel['buy'] ?? ''}",
                               ),
                             ],
                           ),
@@ -133,7 +139,35 @@ class DetailView extends StatelessWidget {
                                 Icons.collections_bookmark_outlined,
                               ),
                               label: const Text('ເຊົ່າປື້ມເຂົ້າຄັງ'),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => RentView(
+                                          rentModel: RentModel(
+                                            title: novel['storyName'],
+                                            author: novel['creatorName'],
+                                            image: novel['image'],
+                                            views: novel['view'],
+                                            likes: novel['like'],
+                                            rating: double.parse(
+                                              ((int.tryParse(
+                                                            novel['view']
+                                                                .toString(),
+                                                          ) ??
+                                                          0) *
+                                                      10 /
+                                                      1550)
+                                                  .clamp(0, 10)
+                                                  .toDouble()
+                                                  .toStringAsFixed(2),
+                                            ),
+                                          ),
+                                        ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -145,7 +179,39 @@ class DetailView extends StatelessWidget {
                               ),
                               icon: const Icon(Icons.visibility_outlined),
                               label: const Text('ຊື້ປື້ມອ່ານ'),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => PurchaseView(
+                                          rentModel: RentModel(
+                                            title: novel['storyName'],
+                                            author: novel['creatorName'],
+                                            image: novel['image'],
+                                            views: novel['view'],
+                                            likes: novel['like'],
+                                            pricePerBook: novel['price'],
+                                            tags:
+                                                (novel['tag'] ?? [])
+                                                    as List<String>,
+                                            rating: double.parse(
+                                              ((int.tryParse(
+                                                            novel['view']
+                                                                .toString(),
+                                                          ) ??
+                                                          0) *
+                                                      10 /
+                                                      1550)
+                                                  .clamp(0, 10)
+                                                  .toDouble()
+                                                  .toStringAsFixed(2),
+                                            ),
+                                          ),
+                                        ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ],
@@ -161,7 +227,7 @@ class DetailView extends StatelessWidget {
             top: MediaQuery.of(context).padding.top + 8,
             left: 16,
             child: CircleAvatar(
-              backgroundColor: Colors.black54,
+              backgroundColor: Colors.transparent,
               child: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () => Navigator.pop(context),

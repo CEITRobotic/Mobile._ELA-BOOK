@@ -20,10 +20,10 @@ class _HomeViewState extends State<HomeView> {
     'https://raw.githubusercontent.com/CEITRobotic/Mobile._ELA-BOOK/main/assets/images/ads_imgs/3.jpg',
   ];
 
-  Map<String, List<Map<String, String>>> comics = {
+  Map<String, List<Map<String, dynamic>>> comics = {
     'ໄວຫນຸ່ມ': [],
     'ຄວາມຮັກ': [],
-    'ອື່ນໆ': [],
+    'ອື່ນໆ...': [],
   };
   bool isLoading = true;
 
@@ -42,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
     setState(() {
       comics['ໄວຫນຸ່ມ'] = results[0];
       comics['ຄວາມຮັກ'] = results[1];
-      comics['ອື່ນໆ'] = results[2];
+      comics['ອື່ນໆ...'] = results[2];
       isLoading = false;
     });
   }
@@ -210,37 +210,6 @@ class _HomeViewState extends State<HomeView> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  comics.keys.toList()[1],
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 12),
-
-            // ✅ Horizontal comic list
-            SizedBox(
-              height: 215,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                itemCount: comics[comics.keys.toList()[1]]!.length,
-                itemBuilder: (context, index) {
-                  return ComicCard(
-                    item: comics[comics.keys.toList()[1]]![index],
-                  );
-                },
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // ✅ Comic section title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
                   comics.keys.toList()[2],
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -273,7 +242,7 @@ class _HomeViewState extends State<HomeView> {
 }
 
 class ComicCard extends StatelessWidget {
-  final Map<String, String> item;
+  final Map<String, dynamic> item;
 
   const ComicCard({required this.item});
 
@@ -349,7 +318,7 @@ class ComicCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          item['view'] ?? '',
+                          "${item['view'] ?? 0}",
                           style: TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                         const SizedBox(width: 12),
@@ -360,7 +329,7 @@ class ComicCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          item['like'] ?? '',
+                          "${item['like'] ?? 0}",
                           style: TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                       ],

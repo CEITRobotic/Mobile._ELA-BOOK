@@ -45,6 +45,7 @@ class NovelRepositoryImpl implements NovelRepository {
       tag: novel.tag!,
       story: novel.story!,
       creator: novel.creator!,
+      price: novel.price!,
       like: 0,
       view: 0,
       book: 0,

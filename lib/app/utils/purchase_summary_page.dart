@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:ela_book/data/models/rent_model.dart';
 import 'package:flutter/material.dart';
 
 class PurchaseSummaryPage extends StatefulWidget {
+  final RentModel rentModel;
   final int quantity;
   final double pricePerBook;
 
@@ -9,7 +11,9 @@ class PurchaseSummaryPage extends StatefulWidget {
     Key? key,
     required this.quantity,
     required this.pricePerBook,
-  }) : super(key: key);
+    RentModel? rentModel,
+  }) : rentModel = rentModel ?? const RentModel(),
+       super(key: key);
 
   @override
   State<PurchaseSummaryPage> createState() => _PurchaseSummaryPageState();
@@ -50,23 +54,24 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
 
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('ຊຳລະເງິນສຳເລັດແລ້ວ'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: const [
-            Icon(Icons.check_circle, size: 50, color: Colors.green),
-            SizedBox(height: 12),
-            Text('ເຈົ້າໄດ້ຊຳລະເງິນລຽບລ້ອຍແລ້ວ'),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('ຕົກລົງ'),
+      builder:
+          (_) => AlertDialog(
+            title: const Text('ຊຳລະເງິນສຳເລັດແລ້ວ'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(Icons.check_circle, size: 50, color: Colors.green),
+                SizedBox(height: 12),
+                Text('ເຈົ້າໄດ້ຊຳລະເງິນລຽບລ້ອຍແລ້ວ'),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('ຕົກລົງ'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -84,13 +89,11 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final rentModel = widget.rentModel;
     final total = widget.quantity * widget.pricePerBook;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ສະຫຼຸບຍອດຊື້'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('ສະຫຼຸບຍອດຊື້'), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: ListView(
@@ -114,8 +117,8 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    'assets/Rakkhuekarnderntharng.jpg',
+                  child: Image.network(
+                    rentModel.image,
                     width: 100,
                     height: 140,
                     fit: BoxFit.cover,
@@ -125,12 +128,18 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text('ຮັກຄືການເດີນທາງ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    children: [
+                      Text(
+                        rentModel.title,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(height: 4),
-                      Text('ຜູ້ແຕ່ງ: ນາງ ຈັນມາລະ ແກ້ວໄຊສີ'),
+                      Text('ຜູ້ແຕ່ງ: ${rentModel.author}'),
                       SizedBox(height: 4),
-                      Text('เข้าชม: 1,234 ครั้ง'),
+                      Text('ເຂົ້າຊົມ: ${rentModel.views} ຄັ້ງ'),
                       SizedBox(height: 4),
                       Row(
                         children: [
@@ -140,7 +149,10 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
                           Icon(Icons.star, color: Colors.amber, size: 16),
                           Icon(Icons.star_half, color: Colors.amber, size: 16),
                           SizedBox(width: 6),
-                          Text('4.5', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            '${rentModel.rating}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     ],
@@ -155,7 +167,10 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('ຈຳນວນຫົວທັ້ງໝົດ', style: TextStyle(fontSize: 16)),
-                Text('${widget.quantity} ຫົວ', style: const TextStyle(fontSize: 16)),
+                Text(
+                  '${widget.quantity} ຫົວ',
+                  style: const TextStyle(fontSize: 16),
+                ),
               ],
             ),
             const SizedBox(height: 10),
@@ -163,15 +178,27 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('ລາຄາຕໍ່ຫົວ', style: TextStyle(fontSize: 16)),
-                Text('${widget.pricePerBook.toStringAsFixed(3)} ກີບ', style: const TextStyle(fontSize: 16)),
+                Text(
+                  '${widget.pricePerBook.toStringAsFixed(3)} ກີບ',
+                  style: const TextStyle(fontSize: 16),
+                ),
               ],
             ),
             const Divider(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('ຍອດລວມທັ້ງໝົດ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                Text('${total.toStringAsFixed(3)} ກີບ', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const Text(
+                  'ຍອດລວມທັ້ງໝົດ',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  '${total.toStringAsFixed(3)} ກີບ',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
 
@@ -201,9 +228,15 @@ class _PurchaseSummaryPageState extends State<PurchaseSummaryPage> {
                 onPressed: _showPaymentSuccessDialog,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 14,
+                  ),
                 ),
-                child: const Text('ຊຳລະເງີນ', style: TextStyle(color: Colors.white, fontSize: 16)),
+                child: const Text(
+                  'ຊຳລະເງີນ',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
               ),
             ),
           ],
